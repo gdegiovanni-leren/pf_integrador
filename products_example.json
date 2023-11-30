@@ -1,0 +1,334 @@
+[
+      {
+            "_id": {
+                  "$oid": "3563b1342a9ec33f67981f61"
+            },
+            "title": "Nike Mens Free Rn 2018 Running Shoe",
+            "description" : "Description for Nike Mens Free Rn 2018 Running Shoe",
+            "code" : "SD-33",
+            "price": 79.99,
+            "status": true,
+            "stock": 32,
+            "category": "Nike",
+            "thumbnails": ["https://m.media-amazon.com/images/I/61dYwO-5fwL._AC_UX569_.jpg",
+            "https://m.media-amazon.com/images/I/61dYwO-5fwL._AC_UX569_.jpg" ],
+            "__v": 0,
+            "comments": [
+                  {
+                        "text": "Magnificas",
+                        "user": "Ger",
+                        "_id": "646cb11687909eee866f157c",
+                        "createdAt": "2023-05-23T12:27:02.882Z"
+                  },
+                  {
+                        "text": "Me van comodas",
+                        "user": "Ger",
+                        "_id": "646d0546e41334b98bde7395",
+                        "createdAt": "2023-05-23T18:26:14.768Z"
+                  },
+                  {
+                        "text": "Excelente compra! no me arrepiento!",
+                        "user": "",
+                        "_id": "64fc7bd19244acfe4bc982e3",
+                        "createdAt": "2023-09-09T14:06:09.014Z"
+                  }
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "1563b1844a9ec32067981f41"
+            },
+            "title": "Adidas RUN 60s 3.0",
+            "description" : "Description for Adidas RUN 60s 3.0",
+            "code" : "AD-22",
+            "price": 89.99,
+            "status": true,
+            "stock": 5,
+            "category": "Adidas",
+            "thumbnails": ["https://m.media-amazon.com/images/I/71aTfpVygqL._AC_SY695_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "1263b1734a9ec33067981f42"
+            },
+            "title": "Adidas RUNFALCON 3.0",
+            "description" : "Description for Adidas RUNFALCON 3.0",
+            "code" : "SD-44",
+            "price": 109,
+            "status": true,
+            "stock": 3,
+            "category": "Adidas",
+            "thumbnails": ["https://m.media-amazon.com/images/I/61B-Tsw0SML._AC_SY695_.jpg",
+            "https://m.media-amazon.com/images/I/61B-Tsw0SML._AC_SY695_.jpg",
+            "https://m.media-amazon.com/images/I/61B-Tsw0SML._AC_SY695_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "1263b1254a9ec43067981f49"
+            },
+            "title": "PUMA Puma Shuffle Low Boot",
+            "description" : "Description for PUMA Puma Shuffle Low Boot",
+            "code" : "SK-14",
+            "price": 120.99,
+            "status": true,
+            "stock": 2,
+            "category": "Puma",
+            "thumbnails": ["https://m.media-amazon.com/images/I/81o4mYobAgL._AC_SX695_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "2263b1254a9ec33067981f91"
+            },
+            "title": "Puma Flyer Flex",
+            "description" : "Description for Puma Flyer Flex",
+            "code" : "PM-2",
+            "price": 69.49,
+            "status": true,
+            "stock": 0,
+            "category": "Puma",
+            "thumbnails": ["https://m.media-amazon.com/images/I/61db2cSAjsL._AC_SY695_.jpg",
+            "https://m.media-amazon.com/images/I/61db2cSAjsL._AC_SY695_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "2363b1254a9ec23067981f41"
+            },
+            "title": "Nike Men's Giannis Immortality",
+            "description" : "Description for Nike Men's Giannis Immortality",
+            "code" : "NA2",
+            "price": 129.50,
+            "status": true,
+            "stock": 7,
+            "category": "Nike",
+            "thumbnails": ["https://m.media-amazon.com/images/I/61ixkdgCOgL._AC_UL400_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "2443c1254a9ec33067981f44"
+            },
+            "title": "PUMA Women's Softride Sophia ",
+            "description" : "Description for PUMA Women's Softride Sophia ",
+            "code" : "PU-229",
+            "price": 99.99,
+            "status": true,
+            "stock": 2,
+            "category": "Puma",
+            "thumbnails": ["https://m.media-amazon.com/images/I/71Yn8Ykb9tL._AC_UL400_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "2443b1254a9ed33067981f44"
+            },
+            "title": "Nike Training",
+            "description" : "Description for Nike Training",
+            "code" : "NA-266",
+            "price": 55.00,
+            "status": true,
+            "stock": 2,
+            "category": "Nike",
+            "thumbnails": ["https://m.media-amazon.com/images/I/81piWyfMXHL._AC_UL400_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "2441b1234a9fc33027981f74"
+            },
+            "title": "PUMA Women's Blur",
+            "description" : "Description for PUMA Women's Blur",
+            "code" : "SF-455",
+            "price": 100.00,
+            "status": true,
+            "stock": 0,
+            "category": "Puma",
+            "thumbnails": ["https://m.media-amazon.com/images/I/61oX9i60cOL._AC_UL400_.jpg",
+            "https://m.media-amazon.com/images/I/61oX9i60cOL._AC_UL400_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "6444b123439fc33027a81f74"
+            },
+            "title": "Nike Mens Dunk High",
+            "description" : "Description for Nike Mens Dunk High",
+            "code" : "SB455",
+            "price": 150.00,
+            "status": true,
+            "stock": 5,
+            "category": "Nike",
+            "thumbnails": ["https://m.media-amazon.com/images/I/71ATu7t1pvL._AC_UL400_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "2444b123439fc33087a81f72"
+            },
+            "title": "Nike Men's Sport Trail",
+            "description" : "Description for Nike Men's Sport Trail",
+            "code" : "NAI-455",
+            "price": 250.00,
+            "status": true,
+            "stock": 2,
+            "category": "Nike",
+            "thumbnails": ["https://m.media-amazon.com/images/I/610fd2iFeSL._AC_UX679_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "2544b123439ff330f7a81f72"
+            },
+            "title": "Adidas Men's Lite Racer Adapt 4.0",
+            "description" : "Description for Adidas Men's Lite Racer Adapt 4.0 ",
+            "code" : "SA-555",
+            "price": 95.50,
+            "status": true,
+            "stock": 3,
+            "category": "Adidas",
+            "thumbnails": ["https://m.media-amazon.com/images/I/81cuTtP+n6L._AC_UL400_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "2544b4235f9ff380f7a81f72"
+            },
+            "title": "Adidas Women's Lite Racer Adapt 3.0",
+            "description" : "Description for Adidas Women's Lite Racer Adapt 3.0 ",
+            "code" : "SA-400",
+            "price": 55.50,
+            "status": true,
+            "stock": 0,
+            "category": "Adidas",
+            "thumbnails": ["https://m.media-amazon.com/images/I/81cuTtP+n6L._AC_UL400_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "9524b4235f9fff80f7a81f72"
+            },
+            "title": "Adidas 2023 Men's Racer ",
+            "description" : "Description for Adidas Men's Racer 2023",
+            "code" : "RA-500",
+            "price": 155.99,
+            "status": true,
+            "stock": 3,
+            "category": "Adidas",
+            "thumbnails": ["https://m.media-amazon.com/images/I/81cuTtP+n6L._AC_UL400_.jpg",
+            "https://m.media-amazon.com/images/I/81cuTtP+n6L._AC_UL400_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "f4f4b123439fc33f87a812f2"
+            },
+            "title": "Nike Ultimate Men's Sport Trail 2023",
+            "description" : "Description for Nike Men's Sport Trail Ultimate 2023",
+            "code" : "NAI-555",
+            "price": 300.00,
+            "status": true,
+            "stock": 8,
+            "category": "Nike",
+            "thumbnails": ["https://m.media-amazon.com/images/I/610fd2iFeSL._AC_UX679_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "f243c1b54a92c33067981f4c"
+            },
+            "title": "PUMA Women's Hideride Sophia 3.0",
+            "description" : "Description for PUMA Women's Hideride Sophia 3.0 ",
+            "code" : "PU-429",
+            "price": 199.99,
+            "status": true,
+            "stock": 5,
+            "category": "Puma",
+            "thumbnails": ["https://m.media-amazon.com/images/I/71Yn8Ykb9tL._AC_UL400_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "cc63b1844abbc32067c81f4c"
+            },
+            "title": "Adidas RUN 60s 4.0",
+            "description" : "Description for Adidas RUN 60s 4.0",
+            "code" : "AD-7000",
+            "price": 189.99,
+            "status": true,
+            "stock": 0,
+            "category": "Adidas",
+            "thumbnails": ["https://m.media-amazon.com/images/I/71aTfpVygqL._AC_SY695_.jpg"],
+            "__v": 0,
+            "comments": [
+            ]
+      },
+      {
+            "_id": {
+                  "$oid": "3563b1356abec33f679b1f61"
+            },
+            "title": "Nike 2022 Running Shoe",
+            "description" : "Description for Nike 2022 Running Shoe",
+            "code" : "NR33",
+            "price": 129.99,
+            "status": true,
+            "stock": 2,
+            "category": "Nike",
+            "thumbnails": ["https://m.media-amazon.com/images/I/61dYwO-5fwL._AC_UX569_.jpg",
+            "https://m.media-amazon.com/images/I/61dYwO-5fwL._AC_UX569_.jpg" ],
+            "__v": 0,
+            "comments": [
+                  {
+                        "text": "Excelentes! ",
+                        "user": "Ger",
+                        "_id": "646cb11687909eee866f157c",
+                        "createdAt": "2023-05-23T12:27:02.882Z"
+                  },
+                  {
+                        "text": "Wow",
+                        "user": "Ger",
+                        "_id": "646d0546e41334b98bde7395",
+                        "createdAt": "2023-05-23T18:26:14.768Z"
+                  },
+                  {
+                        "text": "WIII ",
+                        "user": "Ger",
+                        "_id": "64fc7bd19244acfe4bc982e3",
+                        "createdAt": "2023-09-09T14:06:09.014Z"
+                  }
+            ]
+      }
+
+]
