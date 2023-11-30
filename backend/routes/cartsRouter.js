@@ -213,11 +213,6 @@ router.delete("/:cid", express.json() , async (req, res) => {
 
     const {cid , pid} = req.params
 
-    console.log('delete call:')
-
-    console.log(cid)
-    console.log(pid)
-
   if(cid && pid){
 
     try{
@@ -237,7 +232,6 @@ router.delete("/:cid", express.json() , async (req, res) => {
          console.log('product found on cart to delete')
 
          cart.products = cart.products.filter(function(item) {
-          console.log(item)
           return item.product._id != pid;
           })
 
