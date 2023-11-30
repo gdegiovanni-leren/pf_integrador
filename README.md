@@ -40,36 +40,36 @@ Segunda entrega de proyecto integrador. Ver alcance y supuestos.
 # PRODUCTS
 
 GET /api/products
-query params: limit | page | category | price | availability  | query
+query params: limit | page | category | price | availability  | query 
 
-GET /api/products/{pid}
+GET /api/products/{pid} 
 
-DELETE /api/products/{pid}
+DELETE /api/products/{pid} 
 
-POST /api/products/{pid}
-expected body : { title , description, code, category, stock , price , thumbnails : [] }
+POST /api/products/{pid} 
+expected body : { title , description, code, category, stock , price , thumbnails : [] } 
 
-PUT /api/products/{pid}
-expected body : { title , description, code, category, stock , price , thumbnails : [] }
+PUT /api/products/{pid} 
+expected body : { title , description, code, category, stock , price , thumbnails : [] } 
 
 
 # CART
 
-GET /api/carts
-Crea un carrito vacio y retorna cid
+GET /api/carts 
+Crea un carrito vacio y retorna cid 
 
-GET /api/carts/{cid}
-Retorna el carrito con productos con population
+GET /api/carts/{cid} 
+Retorna el carrito con productos con population 
 
-POST /api/carts/{cid}/products/{pid}
-expected body : { quantity: [+/-]Integer } | { }
-crea nuevo producto, si tiene cantidad se crea con la cantidad pasada, si no tiene se crea con 1 por default
+POST /api/carts/{cid}/products/{pid} 
+expected body : { quantity: [+/-]Integer } | { } 
+crea nuevo producto, si tiene cantidad se crea con la cantidad pasada, si no tiene se crea con 1 por default 
 
-PUT /api/carts/{cid}/products/{pid}
-expected body : { quantity: [+/-]Integer } | { }
-incremento o decremento cantidad , si no se pasa parametro incrementa o decrementa de a 1 por default
+PUT /api/carts/{cid}/products/{pid} 
+expected body : { quantity: [+/-]Integer } | { } 
+incremento o decremento cantidad , si no se pasa parametro incrementa o decrementa de a 1 por default 
 
-PUT /api/carts/{cid}
+PUT /api/carts/{cid} 
 expected body : Array de products, ejemplo:
 `
 [
@@ -84,11 +84,11 @@ expected body : Array de products, ejemplo:
 ]
 `
 
-DELETE /api/carts/{cid}/products/{pid}
-Elimina producto especifico
+DELETE /api/carts/{cid}/products/{pid} 
+Elimina producto especifico 
 
-DELETE api/carts/{cid}
-Elimina todos los productos del carrito
+DELETE api/carts/{cid} 
+Elimina todos los productos del carrito 
 
 
 
