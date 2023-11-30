@@ -35,7 +35,7 @@ Segunda entrega de proyecto integrador. Ver alcance y supuestos.
 
 
 
-## ENDPOINTS
+# ENDPOINTS
 
 # PRODUCTS
 
@@ -71,6 +71,7 @@ incremento o decremento cantidad , si no se pasa parametro incrementa o decremen
 
 PUT /api/carts/{cid}
 expected body : Array de products, ejemplo:
+`
 [
   {
       "_id": "9524b4235f9fff80f7a81f72",
@@ -81,6 +82,7 @@ expected body : Array de products, ejemplo:
       "quantity" : 98
   }
 ]
+`
 
 DELETE /api/carts/{cid}/products/{pid}
 Elimina producto especifico
@@ -100,3 +102,5 @@ Elimina todos los productos del carrito
 - Splide.js - Lightweight and flexible carousel/slider library
 - JSON Web Token (JWT) - Security technology for authentication and data exchange
 - Pinia - We've used Pinia for state management, making our application's data flow smooth and efficient.
+
+-----
