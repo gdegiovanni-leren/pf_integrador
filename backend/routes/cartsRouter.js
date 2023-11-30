@@ -87,14 +87,6 @@ router.put("/:cid/products/:pid", express.json() , async (req, res) => {
   const {cid , pid} = req.params
   const  quantity  = req.body?.quantity ?? 1
 
-  console.log(cid)
-  console.log(pid)
-  console.log(quantity)
-
-  console.log('quantity: '+quantity)
-  console.log('parse int:')
-  console.log(parseInt(quantity))
-
   if(cid && pid && !isNaN(parseInt(quantity))){
 
     try{
