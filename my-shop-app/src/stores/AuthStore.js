@@ -22,22 +22,22 @@ export const useAuthStore = defineStore('auth',  {
 
       const URL = `${import.meta.env.VITE_BASE_URL}login`
       try{
-      const res = await axios.post(URL,{
-        username: temp_username,
-        password: password
-       })
+         const res = await axios.post(URL,{
+         username: temp_username,
+         password: password
+         })
 
-       console.log(res);
-       const {message, username, role} = res.data
-       this.token = message
-       this.user.username = username
-       this.user.role = role
+         console.log(res);
+         const {message, username, role} = res.data
+         this.token = message
+         this.user.username = username
+         this.user.role = role
 
-       localStorage.setItem('token', this.token)
+         localStorage.setItem('token', this.token)
 
-       router.push("/")}catch(err){
+         router.push("/")
+      }catch(err){
          this.error = true
-
        }
 
     },
@@ -45,22 +45,23 @@ export const useAuthStore = defineStore('auth',  {
 
       const URL = `${import.meta.env.VITE_BASE_URL}register`
       try{
-      const res = await axios.post(URL,{
-         username: temp_username,
-         password: password,
-         confirmPassword: confirmPassword
-        })
-        const {token, username, role} = res.data
-        this.token = token
-        this.user.username = username
-        this.user.role = role
-        localStorage.setItem('token', this.token)
-        router.push("/")
+         const res = await axios.post(URL,{
+            username: temp_username,
+            password: password,
+            confirmPassword: confirmPassword
+         })
+         const {token, username, role} = res.data
+         this.token = token
+         this.user.username = username
+         this.user.role = role
+         localStorage.setItem('token', this.token)
+         router.push("/")
       }catch(err){
          this.error = true
          this.message = err.response.data.message
       }
     },
+
     async logout(){
        await router.push("/login")
        localStorage.removeItem('auth')

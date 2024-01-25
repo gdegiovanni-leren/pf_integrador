@@ -11,7 +11,6 @@ const cartItem = computed(() => {
 })
   let mobileMenu = ref(false)
 
-
 </script>
 
 <template>
@@ -53,7 +52,6 @@ const cartItem = computed(() => {
           </div>
         </div>
 
-
         <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
         <ul :class="mobileMenu ? 'flex' : 'hidden'" class="
             flex-col
@@ -71,7 +69,7 @@ const cartItem = computed(() => {
             <RouterLink to="/">Home</RouterLink>
           </li>
 
-          <li class="text-sm font-bold text-white hover:text-blue-400">
+          <li v-if="auth.user.role == 'admin' " class="text-sm font-bold text-white hover:text-blue-400">
             <RouterLink to="/admin">Admin</RouterLink>
           </li>
 

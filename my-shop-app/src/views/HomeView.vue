@@ -12,7 +12,6 @@ import { computed, onMounted } from 'vue';
 const userStore = useAuthStore()
 const productStore = useProductStore()
 
-
 const username = userStore.user.username
 
 onMounted(() => {
@@ -21,9 +20,11 @@ onMounted(() => {
   productStore.getCart()
   }
 
+  productStore.getProducts()
 })
 
 </script>
+
 
 <template>
   <Navbar></Navbar>

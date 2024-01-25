@@ -27,8 +27,6 @@ export const useAdminStore = defineStore("admin", {
 
     async createNewProduct(){
 
-       console.log('CALLING CREATE NEW PRODUCT')
-
        let product = {
         title: this.title,
         description: this.description,
@@ -44,8 +42,6 @@ export const useAdminStore = defineStore("admin", {
           const URL = `${import.meta.env.VITE_BASE_URL}api/products`
           const response = await axios.post(URL,product)
 
-          console.log(response)
-
           if(response && response.data.status == true){
             this.title = '',
             this.description = '',
@@ -53,23 +49,20 @@ export const useAdminStore = defineStore("admin", {
             this.price = '',
             this.stock = '',
             this.category = ''
-
+            //refresh all products / TODO: refresh only the product that was modified
             this.getProducts()
           }
 
-          return response.data
-
+        return response.data
         }catch(e){
+          console.log('create product fails')
           console.error(e)
-          alert('create product fails')
         }
-
       return { status : false, message: 'Product creation error' }
     },
 
-    async updateProduct(pid){
 
-      console.log('calling update product in admin store')
+  async updateProduct(pid){
 
       if(pid === this.pidForUpdate){
 
@@ -85,59 +78,48 @@ export const useAdminStore = defineStore("admin", {
          }
 
          try{
-
           const URL = `${import.meta.env.VITE_BASE_URL}api/products/${pid}`
           const response = await axios.put(URL,productUpdate);
 
-          console.log('response of update product:')
-          console.log(response)
+            if(response && response.data.status == true){
+              this.pidForUpdate = ''
+              this.titleUpdate = '',
+              this.descriptionUpdate = '',
+              this.codeUpdate = '',
+              this.priceUpdate = '',
+              this.stockUpdate = '',
+              this.categoryUpdate = ''
+               //refresh all products / TODO: refresh only the product that was modified
+              this.getProducts()
+            }
+        return response.data;
 
-          if(response && response.data.status == true){
-            this.pidForUpdate = ''
-            this.titleUpdate = '',
-            this.descriptionUpdate = '',
-            this.codeUpdate = '',
-            this.priceUpdate = '',
-            this.stockUpdate = '',
-            this.categoryUpdate = ''
-
-            this.getProducts()
-          }
-
-          return response.data;
-
-          }catch(e){
-            console.error(e)
-            alert('update product fails')
-          }
+        }catch(e){
+          console.log('update products fails')
+          console.error(e)
+        }
       }else{
         alert('PIDS NOT MATCH ERROR')
       }
-
-      return { status : false, message: 'Product update error' }
-
-    },
+    return { status : false, message: 'Product update error' }
+  },
 
 
     async getProducts() {
 
-      console.log('call get products admin')
-
+      console.log('calling get products (admin)')
       try{
-
         const URL = `${import.meta.env.VITE_BASE_URL}api/products`
         const response = await axios.get(URL)
         this.products = await response.data
-
-        }catch(e){
+      }catch(e){
+          console.log('request get all products fails')
           console.log(e)
-          alert('get products fail')
-        }
+      }
     },
 
 
     async getProductsFiltered(action){
-
       let page = 1
       if(action == 'NEXT'){
         page = this.products.nextPage
@@ -145,30 +127,27 @@ export const useAdminStore = defineStore("admin", {
       if(action == 'PREV'){
         page =  this.products.prevPage
       }
-
       const URL = `${import.meta.env.VITE_BASE_URL}api/products?page=${page}`
       const response = await axios.get(URL);
       this.products = await response.data;
-
     },
 
-    async removeItem(pid){
 
+    async removeItem(pid){
       try{
           const URL = `${import.meta.env.VITE_BASE_URL}api/products/${pid}`
           const response = await axios.delete(URL);
 
           if(response && response.data.status == true){
+            //refresh all products / TODO: refresh only the product that was modified
             this.getProducts()
           }
-
           return response.data
 
-        }catch(e){
-          console.log(e)
-        }
-
-        return {status: false, message: 'Delete product fail'}
+      }catch(e){
+        console.log(e)
+      }
+    return {status: false, message: 'Delete product fail'}
     },
 
 

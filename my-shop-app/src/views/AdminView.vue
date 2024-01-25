@@ -51,12 +51,7 @@ for (let i = 0; i < store.products.length; i++) {
 
   async function removeItem(pid){
 
-  console.log('remove item call: '+pid)
-
    const result = await store.removeItem(pid)
-
-   console.log(result)
-
    if(result.status == true){
      showMessageSuccess.value = true
      messageSuccess = result.message
@@ -69,21 +64,16 @@ for (let i = 0; i < store.products.length; i++) {
   async function updateProduct(pid){
 
     const result = await store.updateProduct(pid)
-
-    console.log('result for update: ')
-    console.log(result)
-
     if(result.status == true){
-     updateProductModal.value = false
-     showMessageSuccess.value = true
-     messageSuccess = result.message
-     showMessageError.value = false
-     showMessageErrorModal.value = false
+      updateProductModal.value = false
+      showMessageSuccess.value = true
+      messageSuccess = result.message
+      showMessageError.value = false
+      showMessageErrorModal.value = false
     }else{
       console.log(result.message)
       showMessageErrorModal.value = false
       messageErrorModal = result.message
-      console.log(messageErrorModal)
       showMessageErrorModal.value = true
     }
 
@@ -91,13 +81,12 @@ for (let i = 0; i < store.products.length; i++) {
 
   async function createNewProduct(){
     const result = await store.createNewProduct()
-    console.log(result)
     if(result.status == true){
-     newProductModal.value = false
-     showMessageSuccess.value = true
-     messageSuccess = result.message
-     showMessageError.value = false
-     showMessageErrorModal.value = false
+      newProductModal.value = false
+      showMessageSuccess.value = true
+      messageSuccess = result.message
+      showMessageError.value = false
+      showMessageErrorModal.value = false
     }else{
       console.log(result.message)
       showMessageErrorModal.value = false
@@ -278,7 +267,6 @@ function onCloseModal(){
 
     <div class="border-b border-gray-900/10 pb-12">
 
-
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
         <div class="sm:col-span-3">
           <label for="title" class="block text-sm font-medium leading-6 text-gray-900">Title</label>
@@ -350,7 +338,6 @@ function onCloseModal(){
     </div>
   </div>
 </div>
-
 
 
 <!-- Product Modal for update product -->
@@ -442,9 +429,6 @@ function onCloseModal(){
 </div>
 
 
-
-
-
 </template>
 
 <style scoped>
@@ -472,12 +456,9 @@ function onCloseModal(){
 {
   opacity: 0
 }
-
-
 .disabled-opacity-50{
     pointer-events: none;
     opacity: 50%;
 }
-
 
 </style>

@@ -2,13 +2,19 @@
 import { ref } from 'vue';
 import Navbar from '../components/Navbar.vue';
 import { useProductStore } from '../stores/ProductsStore';
+import { useAuthStore } from '../stores/AuthStore';
 import axios from "axios";
 
 const store = useProductStore()
+const authStore = useAuthStore()
+
 let total = ref(0);
 let checkout = ref(false)
 let showMessageError = ref(false)
 let messageError = ''
+let purchase_success = ref(false)
+let purchase_incomplete = ref(false)
+let purchase = null
 
 
 /*
@@ -27,7 +33,6 @@ async function increase(_pid){
   const item = store.productsOnCart.find(element => element._id === _pid)
 
   console.log(item)
-  console.log(store.cart_id)
 
   const URL = `${import.meta.env.VITE_BASE_URL}api/carts/${store.cart_id}/products/${_pid}`
       const response = await axios.put(URL,{
@@ -35,12 +40,10 @@ async function increase(_pid){
       })
 
    if(response.data && response.data.status == true){
-    console.log('increment success')
-
-   item.quantity++
-   const price = await item.price
-   total.value += await price
-
+    //console.log('increment success')
+    item.quantity++
+    const price = await item.price
+    total.value += await price
    }else{
     showMessageError.value = true
     messageError = 'There was an error trying to increase'
@@ -50,21 +53,12 @@ async function increase(_pid){
   }
   async function removeItem(_pid){
 
-    const URL = `${import.meta.env.VITE_BASE_URL}api/carts/${store.cart_id}/products/${_pid}`
+      const URL = `${import.meta.env.VITE_BASE_URL}api/carts/${store.cart_id}/products/${_pid}`
       const response = await axios.delete(URL,{})
-
-      console.log('detele cal!!')
-      console.log(response)
-
+      //console.log('detele item call')
       if(response.data){
         if(response.data.status == true ){
-
-        store.productsOnCart = store.productsOnCart.filter(product => product._id != _pid)
-
-        console.log('producto eliminado con exito')
-
-        console.log(store.productsOnCart)
-
+          store.productsOnCart = store.productsOnCart.filter(product => product._id != _pid)
         }else{
          alert(response.data.message);
         }
@@ -80,51 +74,108 @@ async function increase(_pid){
 
     if(item.quantity > 1){
 
-      const URL = `${import.meta.env.VITE_BASE_URL}api/carts/${store.cart_id}/products/${_pid}`
+        const URL = `${import.meta.env.VITE_BASE_URL}api/carts/${store.cart_id}/products/${_pid}`
         const response = await axios.put(URL,{
         quantity: '-1'
         })
-
           if(response.data && response.data.status == true){
-            console.log('decrement success')
-
-          item.quantity--
-          const price = await item.price
-          total.value -= await price
-
+            //console.log('decrement success')
+            item.quantity--
+            const price = await item.price
+            total.value -= await price
           }else{
             showMessageError.value = true
-            messageError = 'There was an error trying to decrement'
+            messageError = 'There was an error trying to decrement quantity'
           }
     }
   }
 
 async function emptyCart(){
-  console.log('EMPTY CART CALL!')
 
     const cid = store.cart_id
-
     try{
-    const URL = `${import.meta.env.VITE_BASE_URL}api/carts/${cid}`
-    const response = await axios.delete(URL)
+       const URL = `${import.meta.env.VITE_BASE_URL}api/carts/${cid}`
+       const response = await axios.delete(URL)
 
       if(response.data && response.data.status == true){
-        console.log('remove all items success')
+        //console.log('remove all items success')
         store.productsOnCart = []
+        total.value = 0
       }else{
         showMessageError.value = true
         messageError = 'There was an error trying to remove products from the cart'
       }
-
     }catch(e){
      showMessageError.value = true
      messageError = 'There was an error trying to remove products from the cart'
+    }
+}
+
+async function closeAndRestartValues(){
+  purchase = null
+  purchase_incomplete.value = false
+  purchase_success.value = false
+}
+
+async function onPurcharse(){
+
+    console.log('@ ON PUCHARSE CALL @')
+    const cid = store.cart_id
+
+    if(cid){
+        try{
+        const URL = `${import.meta.env.VITE_BASE_URL}api/carts/${cid}/purchase`
+        const response = await axios.post(URL)
+          console.log(response)
+          if(response && response.data.status == true){
+            let pids = []
+            for await (let product of response.data.products_success) {
+              pids.push(product._id)
+            }
+            //We leave only the products that could not be purchased associated with the cart
+            store.productsOnCart =  store.productsOnCart.filter(x => !pids.includes(x._id))
+
+            //we recalculate cart total price for view
+            total.value = 0
+            store.productsOnCart.forEach(element =>{
+                total.value += (element.price * element.quantity)
+                //console.log('total acumm',total.value)
+            })
+            console.log('response transaction: ',response.data.transaction)
+            purchase = response.data
+            if(response.data.transaction == 'complete'){
+              //If the entire cart is sold, delete the cart id and then the redirection to home will set new one automatically
+              localStorage.setItem('cart_id','')
+              store.productsOnCart = []
+              total.value = 0
+              //complete purchase, display modal
+              purchase_success.value = true
+            }else{
+              //partial purchase, display modal
+              purchase_incomplete.value = true
+            }
+          }else{
+            //unknown error
+            messageError = response.data.message ? response.data.message : 'There was an error trying to finish purcharse..'
+            showMessageError.value = true
+
+          }
+
+      }catch(e){
+        console.log(e)
+        messageError = 'There was an error trying to finish purchase.'
+        showMessageError.value = true
+      }
+    }else{
+      messageError = 'There was an error trying to finish purchase. cart id not found.'
+      showMessageError.value = true
     }
 
 }
 
 store.productsOnCart.forEach(element =>{
-  total.value += element.price
+  console.log('total exec')
+  total.value += ( element.price * element.quantity )
 })
 
 </script>
@@ -137,12 +188,14 @@ store.productsOnCart.forEach(element =>{
         <div class="flex flex-col mt-8">
           <div class="flex justify-between">
             <h2 class="text-lg font-medium leading-6 text-gray-900">Shopping Cart</h2>
-            <button @click="emptyCart()"
+            <div v-if="authStore.user.role == 'user' ">
+            <button  @click="emptyCart()"
             :class=" store.productsOnCart.length > 0 ? 'mt-4 p-4 bg-gray-600 mr-2 text-white text-center py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-50' :
              ' disabled-opacity-50 mt-4 p-4 bg-gray-600 mr-2 text-white text-center py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-50' "
             >
               Empty Cart
             </button>
+           </div>
           </div>
           <div class="flex-1 mt-4">
             <div class="overflow-x-auto">
@@ -234,18 +287,19 @@ store.productsOnCart.forEach(element =>{
               <span>Total:</span>
               <span>${{Math.round((total) * 1e11) / 1e11}}</span>
             </div>
-            <button @click="checkout = !checkout"
+            <div v-if="authStore.user.role == 'user' ">
+            <button @click="onPurcharse"
             :class=" store.productsOnCart.length > 0 ? 'mt-4 w-full bg-gray-800 text-white text-center py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-50' :
             ' mt-4 w-full bg-gray-800 text-white text-center py-2 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-50 disabled-opacity-50'">
               Checkout
             </button>
+          </div>
           </div>
         </div>
       </div>
 
     </div>
   </div>
-
 
     <!-- messages error/success -->
     <Transition name="fade"  :duration="{ enter: '1000', leave: '2000' }">
@@ -255,13 +309,15 @@ store.productsOnCart.forEach(element =>{
       </div>
     </Transition>
 
+  <!-- checkout modal for purchase success -->
+  <div v-if="authStore.user.role == 'user' ">
   <!-- checkout & payment -->
-  <div :class="checkout ? 'scale-100' : ''" class=" fixed scale-0 z-10 inset-0 overflow-y-auto">
+  <div :class="purchase_success ? 'scale-100' : ''" class=" fixed scale-0 z-10 inset-0 overflow-y-auto">
   <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center">
     <!-- Overlay background -->
     <div class="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
     <!-- Modal content -->
-    <div :class="checkout ? 'scale-100' : ''" class="transform scale-0 transition-transform duration-300 relative z-10 w-full  max-w-md p-6 bg-white rounded-lg shadow-lg">
+    <div :class="purchase_success ? 'scale-100' : ''" class="transform scale-0 transition-transform duration-300 relative z-10 w-full  max-w-md p-6 bg-white rounded-lg shadow-lg">
       <!-- Icon -->
       <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 text-green-500 bg-green-100 rounded-full">
         <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
@@ -269,7 +325,7 @@ store.productsOnCart.forEach(element =>{
         </svg>
       </div>
       <!-- Message -->
-      <p class="text-lg font-medium text-gray-800">Payment successful!</p>
+      <p class="text-lg font-medium text-gray-800">Purchase completed! We will shortly be sending you an email with the details.</p>
       <!-- Button -->
       <div class="mt-6">
         <button  class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-500">
@@ -278,7 +334,40 @@ store.productsOnCart.forEach(element =>{
       </div>
     </div>
   </div>
+  </div>
 </div>
+
+<!-- checkout modal for purchase error -->
+<div v-if="authStore.user.role == 'user' ">
+  <!-- checkout & payment -->
+  <div :class="purchase_incomplete ? 'scale-100' : ''" class=" fixed scale-0 z-10 inset-0 overflow-y-auto">
+  <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center">
+    <!-- Overlay background -->
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
+    <!-- Modal content -->
+    <div :class="purchase_incomplete ? 'scale-100' : ''" class="transform scale-0 transition-transform duration-300 relative z-10 w-full  max-w-md p-6 bg-white rounded-lg shadow-lg">
+      <!-- Icon -->
+      <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 text-green-500 bg-green-100 rounded-full">
+        <svg class="w-6 h-6 fill-current" viewBox="0 0 20 20">
+          <path d="M17.707 4.293c-.391-.391-1.023-.391-1.414 0l-7.293 7.293-3.293-3.293c-.391-.391-1.023-.391-1.414 0-.391.391-.391 1.023 0 1.414l4 4c.195.195.451.293.707.293s.512-.098.707-.293l8-8c.391-.391.391-1.023 0-1.414z"></path>
+        </svg>
+      </div>
+      <!-- Message -->
+      <p class="text-lg font-medium text-gray-800">Your purchase was successful! Although due to lack of stock some of your products could not be included.
+        Don't worry, you can continue shopping and we will notify you when there is stock!.
+      </p>
+      <!-- Button -->
+      <div class="mt-6">
+        <button @click="closeAndRestartValues()" class="px-4 py-2 text-sm font-medium text-white bg-green-500 rounded hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-500">
+          Go Back to shopping
+        </button>
+
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
 </template>
 
 

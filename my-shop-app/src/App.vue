@@ -1,11 +1,11 @@
 <script setup>
-import { RouterView } from 'vue-router';
+import {  RouterView } from 'vue-router';
 import { useProductStore } from './stores/ProductsStore';
 
 const store = useProductStore()
-store.getProducts()
-store.getCart()
 
+//store.getProducts()
+store.getCart()
 
 </script>
 <template>

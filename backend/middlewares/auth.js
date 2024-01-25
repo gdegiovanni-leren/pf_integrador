@@ -1,23 +1,37 @@
 
 import jwt from 'jsonwebtoken'
+import config from '../config/config.js'
 
-async function auth(req, res, next){
+
+export async function auth(req, res, next){
+
     const authHeader = await req.headers.authorization || req.headers.Authorization;
-
+    //console.log('auth header found ?',authHeader)
     const token = await authHeader && authHeader.split(" ")[1];
+    console.log('auth call, token? ',token ? 'yes' : 'no')
 
-    if (!token) {
-        return res.status(401).json({ error: 'Missing authorization header' });
-      }
+    if (!token) return res.status(403).json({ error: 'Missing authorization header' });
 
-      jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+      jwt.verify(token, config.jwt_secret_key, (err, user) => {
         if (err) {
+          console.log('invalid o expirred')
           return res.status(403).json({ error: 'Invalid or expired token' });
         }
-
-
-        next();
+        req.user = user
+        next()
       });
     }
 
-export default auth
+
+ export const  authorization =  role => {
+
+  return async (req, res, next ) => {
+
+    const user = await req.user
+    if(!user) return res.status(401).json({ error: 'Unauthorized '})
+    if(user.role != role ) return res.status(401).json({ error: 'Unauthorized'})
+
+    return next()
+  }
+
+ }

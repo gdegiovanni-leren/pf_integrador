@@ -1,13 +1,13 @@
 
 import express from 'express'
-import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import loginRouter from './routes/loginRouter.js'
 import registerRouter from './routes/registerRouter.js'
 import productsRouter from './routes/productsRouter.js'
 import cartsRouter from './routes/cartsRouter.js'
-import auth from './middlewares/auth.js'
+import config from './config/config.js'
+
 
 const corsOrigin ={
   origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
@@ -15,7 +15,10 @@ const corsOrigin ={
   optionSuccessStatus:200
 }
 dotenv.config()
-const app = express();
+const app = express()
+
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(cors(corsOrigin))
 
 app.use('/login', loginRouter)
@@ -25,19 +28,9 @@ app.use('/api/products', productsRouter )
 app.use('/api/carts', cartsRouter )
 
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
-
-app.get('/', (req,res) => {
+app.get('/health', (req,res) => {
   res.status(200).send('OK')
 })
 
-const port = process.env.PORT
-app.listen(port, () =>{
-    mongoose.connect(process.env.DATABASE_URL,{
-        useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }).then(console.log("Connected to database!"))
-    .catch(err => console.log(err))
-    console.log("Port listening on: ", port);
-})
+
+app.listen(config.port, () => console.log('Listening on port '+config.port))

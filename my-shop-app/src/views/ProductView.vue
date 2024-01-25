@@ -14,35 +14,33 @@ const store = useProductStore()
 
 const route = useRoute()
 const productId = route.params.productId
-let selectedProduct = store.products.payload.filter(element => element._id === String(productId))
 
+let selectedProduct = null
 
-console.log(productId);
-console.log(selectedProduct)
+//FIXME
+try{
+selectedProduct = store.products.payload.filter(element => element._id === String(productId))
+}catch(e){
+    console.log('products array not found, redirecting to home..')
+    window.location.href = '/'
+}
 
-
-
-//store.getComments(productId)
 const authStore = useAuthStore()
 
 
 async function getProduct(_id) {
 
-console.log('get product call with id: '+_id)
+    try{
+    const URL = `${import.meta.env.VITE_BASE_URL}api/products/${_id}`;
+    const response = await axios.get(URL);
+    return await response.data;
 
-try{
+    }catch(e){
+        console.log(e)
+        //TODO: HANDLE ERROR
+    }
 
-const URL = `${import.meta.env.VITE_BASE_URL}api/products/${_id}`;
-const response = await axios.get(URL);
-return await response.data;
-
-}catch(e){
-    console.log(e)
-    //TODO: REDIRECT 404 PAGE
-}
-
-return null
-
+ return null
 }
 
 
@@ -53,9 +51,7 @@ async function addComment() {
             comment: comment.value,
             username: authStore.user.username
         })
-
         console.log(response);
-
     }
     catch (err) {
         console.log(err);
@@ -63,24 +59,21 @@ async function addComment() {
         comment.value = ''
         //await store.getComments(productId)
     }
-
 }
 
-onMounted(() => {
 
+onMounted(() => {
     window.scrollTo({
         top: 0,
         behavior: 'smooth' // This enables smooth scrolling
     });
-
 })
 
-
 </script>
-<template>
 
+<template>
     <Navbar></Navbar>
-    <div class="container mx-auto px-4 py-8">
+    <div v-if="selectedProduct" class="container mx-auto px-4 py-8">
         <div class="lg:flex">
             <!-- Shoe Image -->
             <div class="lg:w-1/2">
@@ -106,13 +99,11 @@ onMounted(() => {
                     </select>
                 </div>
 
-                <!-- Color -->
-
-
+                <!-- Stock -->
                 <p class="font-bold text-2xl mb-4">${{ selectedProduct[0].price }}</p>
                 <p class="text-gray-600 text-2xl mt-2 mb-4">STOCK: <span class="font-bold">{{ selectedProduct[0].stock }}</span></p>
 
-                <div v-if="parseInt(selectedProduct[0].stock) > 0">
+                <div v-if="authStore.user.role == 'user' && parseInt(selectedProduct[0].stock) > 0">
                 <a @click="store.addToCart(selectedProduct[0]._id), addProduct = !addProduct"
                     :class="addProduct ? 'bg-green-600 disabled-link' : ''"
                     class="cursor-pointer flex items-center justify-center md:w-[412px] rounded-md bg-gray-900 px-5 py-2.5 text-center text-sm font-medium text-white  focus:outline-none focus:ring-4 focus:ring-blue-300">
@@ -151,16 +142,16 @@ onMounted(() => {
                     <p class="text-gray-500 text-sm">Posted on {{ comments.createdAt }}</p>
                 </div>
 
+                <!-- Comment Form -->
+                    <form class="mt-4" @submit.prevent="addComment">
+                        <h3 class="text-lg font-medium mb-2">Leave a Comment</h3>
+                        <textarea required v-model="comment" class="w-full h-24 px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2
+                            focus:ring-blue-500 rounded resize-none" placeholder="Write your comment here..."></textarea>
+                        <div  v-if="authStore.user.role == 'user'" >
+                           <button type="submit" class="mt-4 bg-gray-900 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
+                        </div>
+                    </form>
 
-
-                <!-- Add Comment Form -->
-                <form class="mt-4" @submit.prevent="addComment">
-                    <h3 class="text-lg font-medium mb-2">Leave a Comment</h3>
-                    <textarea required v-model="comment" class="w-full h-24 px-3 py-2 border border-gray-300 focus:outline-none focus:ring-2
-                        focus:ring-blue-500 rounded resize-none" placeholder="Write your comment here..."></textarea>
-                    <button type="submit"
-                        class="mt-4 bg-gray-900 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
-                </form>
             </div>
         </div>
     </div>
