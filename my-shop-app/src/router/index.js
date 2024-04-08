@@ -28,10 +28,10 @@ const router = createRouter({
     {
       path: "/cart",
       name: "Cart",
-      component: () => import('../views/ShopcartView.vue'),
+      component: () => import('../views/ShopCartView.vue'),
       meta:{
       requiresAuth: true,
-      roles : ['user']
+      roles : ['user','premium']
       }
     },
     {
@@ -40,8 +40,13 @@ const router = createRouter({
       component: () => import('../views/AdminView.vue'),
       meta:{
       requiresAuth: true,
-      roles : ['admin']
+      roles : ['admin','premium']
       }
+    },
+    {
+      path: "/profile",
+      name: "Profile",
+      component: () => import('../views/ProfileView.vue'),
     },
     {
       path: "/products/:productId",
@@ -55,6 +60,11 @@ const router = createRouter({
       path: "/unauthorized",
       name: "Unauthorized",
       component: () => import('../views/UnauthorizedView.vue')
+    },
+    {
+      path: "/password_recovery",
+      name: "Passwordrecovery",
+      component: () => import('../views/PasswordrecoveryView.vue')
     },
   ]
 })
@@ -76,10 +86,17 @@ router.beforeEach((to, from, next) => {
       //console.log('comparing roles')
       //console.log('meta role: ',to.meta.roles)
       //console.log('user role: '+auth.user.role)
+      console.log(to.meta.roles)
+      if(to.meta.roles && !to.meta.roles.includes(auth.user.role)){
+        next({ name: 'Unauthorized'})
+      }
+
+      /*
       if(to.meta.roles && to.meta.roles != auth.user.role){
         console.log(to.meta.roles+ ' NOT MATCH WITH '+auth.user.role)
         next({ name: 'Unauthorized'})
       }
+      */
       next()
     }
   } else {

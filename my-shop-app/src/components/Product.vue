@@ -4,7 +4,7 @@ import { useProductStore } from '../stores/ProductsStore';
 const store = useProductStore()
 defineProps({
     productName: String,
-    productImg: Array,
+    productImg: String,
     price: Number,
     stock: Number,
     quantity: Number,

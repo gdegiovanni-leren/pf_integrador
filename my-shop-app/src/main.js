@@ -30,7 +30,7 @@ axios.interceptors.response.use(function (response) {
 
     if (error.response.status == 403) {
       //FIXME
-      if(window.location.pathname != '/register'){
+      if(window.location.pathname != '/register' || window.location.pathname != '/password_recovery'){
       router.push('/login')
       }
     }

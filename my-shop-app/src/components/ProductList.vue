@@ -38,7 +38,7 @@ const username = userStore.user.username
 
                 <Product v-for="product in store.products.payload" :product-name="product.title" :key="product._id" :price="product.price"
                     :stock="product.stock"
-                    :product-img="product.thumbnails" :id="product._id"></Product>
+                    :product-img="product.thumbnails ? product.thumbnails[0] : '' " :id="product._id"></Product>
                      <h1 v-show="store.products.payload.length === 0">There are no products for this filters...</h1>
             </div>
             <div class="flex justify-center">

@@ -69,8 +69,12 @@ const cartItem = computed(() => {
             <RouterLink to="/">Home</RouterLink>
           </li>
 
-          <li v-if="auth.user.role == 'admin' " class="text-sm font-bold text-white hover:text-blue-400">
+          <li v-if="auth.user.role == 'admin' || auth.user.role == 'premium' " class="text-sm font-bold text-white hover:text-blue-400">
             <RouterLink to="/admin">Admin</RouterLink>
+          </li>
+
+          <li class="text-sm font-bold text-white hover:text-blue-400">
+            <RouterLink to="/profile">Profile</RouterLink>
           </li>
 
           <RouterLink to="/cart" class="flex"> <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 mt-1 h-6 w-6 flex items-center" fill="none"

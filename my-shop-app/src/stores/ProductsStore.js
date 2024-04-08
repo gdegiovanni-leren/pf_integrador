@@ -123,6 +123,7 @@ export const useProductStore = defineStore("product", {
     //add specific product to cart
     async addToCart(_pid) {
 
+
       const product = this.products.payload.find((element) => element._id === _pid)
 
       if(product){
@@ -130,6 +131,7 @@ export const useProductStore = defineStore("product", {
         if(product.stock <= 0){
           this.showMessageError = true
           this.messageError = 'Could not add product to cart. Out of stock!'
+          return false
         }
 
           const URL = `${import.meta.env.VITE_BASE_URL}api/carts/${this.cart_id}/products/${_pid}`
@@ -151,13 +153,27 @@ export const useProductStore = defineStore("product", {
               product.quantity = 1
               this.productsOnCart.push(product);
             }
+            return true
         }else{
-          this.showMessageError = true
-          this.messageError = 'Could not add product to cart'
+          //this.showMessageError = true
+          //this.messageError = 'Could not add product to cart'
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: response.data.message ? response.data.message : 'the product could not be added',
+            confirmButtonText: 'OK'
+            });
+            return false
         }
 
     }else{
-      alert('ERROR: PRODUCT NOT FOUND IN PRODUCTS LIST')
+      Swal.fire({
+        title: 'Error!',
+        icon: 'error',
+        text: 'PRODUCT NOT FOUND IN PRODUCTS LIST',
+        confirmButtonText: 'OK'
+        });
+        return false
     }
 
     },

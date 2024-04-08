@@ -26,6 +26,7 @@ const store = useAuthStore()
         <button class="bg-white hover:bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Login</button>
       </form>
       <p class="mt-4 text-white">Don't have an account? <RouterLink to="/register" class="underline hover:text-gray-400">Register here</RouterLink></p>
+      <p class="mt-4 text-white">Forgot your password? <RouterLink to="/password_recovery" class="underline hover:text-gray-400">Recover here</RouterLink></p>
     </div>
   </div>
   <div :class="store.error ? 'scale-100' : ''" class=" fixed scale-0 z-10 inset-0 overflow-y-auto">
@@ -48,7 +49,7 @@ const store = useAuthStore()
       <!-- Button -->
       <div class="mt-6">
         <button  class="px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-500">
-         <RouterLink @click="store.error = !store.error, username = '', password = ''" to="/login">Try again</RouterLink> 
+         <RouterLink @click="store.error = !store.error, username = '', password = ''" to="/login">Try again</RouterLink>
         </button>
       </div>
     </div>
