@@ -5,15 +5,15 @@ PROYECTO FINAL INTEGRADOR . Ver proceso de compra y funcionalidades.
 ## SETUP ENTORNO DEVELOPMENT
 
 - BACKEND
-  cargar .env
-  npm install
-  npm start
-  puerto default: 8080
+  - cargar .env
+  - npm install
+  - npm start
+  - puerto default: 8080
 
 - FRONTEND (my-shop-app)
-  npm install
-  npm run dev
-  puerto default: 5173
+  - npm install
+  - npm run dev
+  - puerto default: 5173
 
 ## DATABASE
 
